@@ -7,7 +7,7 @@ from flask import Response
 from pickabar.bars import get_categories
 
 def debug_state():
-    "PICKABAR_DEBUG" in environ
+    return "PICKABAR_DEBUG" in environ
 
 def json(what, code=200):
     return Response(_json.dumps(what), code, mimetype='application/json')
