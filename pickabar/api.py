@@ -22,6 +22,17 @@ def env_key_variants(k):
         "PICKABAR_YELP_%s" % upcase,
     ]
 
+def filter_categories(businesses, exclude):
+    categories = set(exclude)
+    filtered = []
+    for b in businesses:
+        for cat in b.categories:
+            if cat.alias in categories:
+                break
+        else:
+            filtered.append(b)
+
+    return filtered
 
 
 class YelpClient(Client):
@@ -79,3 +90,32 @@ class YelpClient(Client):
                         break
 
         super(YelpClient, self).__init__(Oauth1Authenticator(**kwargs))
+
+    def search_bars(self, location, categories=None, **kwargs):
+        """
+        Search for bars at a specific location. If ``categories`` is given it
+        must be a ``dict`` mapping category aliases to booleans indicating if
+        these should be included or excluded from the results. Categories are
+        excluded after the query so you might get fewer results than the limit
+        you gave (the default is ``20``).
+        """
+        include = set(["bars"])
+        exclude = []
+        if "category_filter" in kwargs:
+            include.update(kwargs["category_filter"].split(","))
+
+        if categories:
+            for cat, ok in categories.items():
+                if ok:
+                    include.add(cat)
+
+        kwargs["category_filter"] = ",".join(include)
+        kwargs["location"] = location
+        resp = self.search(**kwargs)
+
+        if categories:
+            exclude = [c for c, ok in categories.items() if not ok]
+            resp.businesses = filter_categories(resp.businesses,
+                    exclude)
+
+        return resp
