@@ -29,7 +29,7 @@ def json_bars():
 
 @app.route("/")
 def home():
-    return "it works!"
+    return "WIP"
 
 if __name__ == "__main__":
     app.run()

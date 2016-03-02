@@ -89,9 +89,6 @@ class YelpClient(Client):
                         kwargs[k] = environ[v]
                         break
 
-        # debug
-        print ",".join(kwargs.keys())
-
         super(YelpClient, self).__init__(Oauth1Authenticator(**kwargs))
 
     def search_bars(self, location, categories=None, **kwargs):
