@@ -2,9 +2,11 @@
 
 from flask import Flask, request
 from app_helpers import json, json_error, parse_categories, bar_to_dict
+from app_helpers import debug_state
 from pickabar.api import YelpClient
 
 app = Flask(__name__)
+app.debug = debug_state()
 
 yclient = YelpClient(env=True)
 
