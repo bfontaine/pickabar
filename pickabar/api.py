@@ -4,13 +4,27 @@
 Thin wrapper around Yelp's client library.
 """
 
+from os import environ
 from netrc import netrc
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 
 __all__ = ["YelpClient"]
 
-class YelpClient(object):
+def env_key_variants(k):
+    variants = [k]
+    upcase = k.upper()
+    return [
+        k,
+        upcase,
+        "YELP_%s" % upcase,
+        "PICKABAR_%s" % upcase,
+        "PICKABAR_YELP_%s" % upcase,
+    ]
+
+
+
+class YelpClient(Client):
     """
     Yelp API client. Keywords arguments for the constructor should be
     ``consumer_key``, ``consumer_secret``, ``token``, ``token_secret``. There
@@ -37,6 +51,11 @@ class YelpClient(object):
                 token_secret="your_token_secret")
 
     If ``netrc`` is passed it takes precedence over the other arguments.
+
+    An alternative way of giving the credentials is to pass ``env=True``. In
+    that case it'll look for environment keys ``YELP_CONSUMER_KEY``,
+    ``YELP_CONSUMER_SECRET``, ``YELP_TOKEN`` and ``YELP_TOKEN_SECRET``. You can
+    also use ``PICKABAR_`` as a prefix instead of ``YELP_``.
     """
 
     def __init__(self, **kwargs):
@@ -51,5 +70,12 @@ class YelpClient(object):
                     token=token,
                     token_secret=secret,
                 )
+        elif "env" in kwargs and kwargs.pop("env"):
+            keys = ["consumer_key", "consumer_secret", "token", "token_secret"]
+            for k in keys:
+                for v in env_key_variants(k):
+                    if v in environ:
+                        kwargs[k] = environ[v]
+                        break
 
-        self._client = Client(Oauth1Authenticator(**kwargs))
+        super(YelpClient, self).__init__(Oauth1Authenticator(**kwargs))
