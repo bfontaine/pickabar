@@ -70,6 +70,7 @@ class YelpClient(Client):
     """
 
     def __init__(self, **kwargs):
+        keys = ["consumer_key", "consumer_secret", "token", "token_secret"]
         if "netrc" in kwargs and kwargs.pop("netrc"):
             auths = netrc().authenticators("api.yelp.com")
             if auths:
@@ -82,12 +83,14 @@ class YelpClient(Client):
                     token_secret=secret,
                 )
         elif "env" in kwargs and kwargs.pop("env"):
-            keys = ["consumer_key", "consumer_secret", "token", "token_secret"]
             for k in keys:
                 for v in env_key_variants(k):
                     if v in environ:
                         kwargs[k] = environ[v]
                         break
+
+        # debug
+        print ",".join(kwargs.keys())
 
         super(YelpClient, self).__init__(Oauth1Authenticator(**kwargs))
 
