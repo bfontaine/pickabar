@@ -22,7 +22,7 @@ def json_bars():
     except ValueError:
         return json_error("Bad categories")
 
-    bars = yclient.get_bars(location, categorie=categories)
+    bars = yclient.search_bars(location, categorie=categories)
     return json({
         "bars": [bar_to_dict(bar) for bar in bars],
     })

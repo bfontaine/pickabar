@@ -12,7 +12,6 @@ from yelp.oauth1_authenticator import Oauth1Authenticator
 __all__ = ["YelpClient"]
 
 def env_key_variants(k):
-    variants = [k]
     upcase = k.upper()
     return [
         k,
