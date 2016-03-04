@@ -1,6 +1,6 @@
 # Pickabar
 
-Pickabar is a Web app to—guess what?— pick a bar.
+Pickabar is a Web app to —guess what?— pick a bar.
 
 ## Instructions
 
@@ -11,7 +11,7 @@ The next steps are up to you. 🍻
 
 ## See Also
 
-Not to be confused with [Gerrard][] nor the one with [Dave’s crown][dave].
+Not to be confused with [Gerrard][] nor [the one with Dave’s crown][dave].
 
 [Gerrard]: http://www.imdb.com/name/nm4946902/
 [dave]: http://www.pickabar.com/blog2/about-2/#post-1168
