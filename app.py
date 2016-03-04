@@ -22,9 +22,9 @@ def json_bars():
     except ValueError:
         return json_error("Bad categories")
 
-    bars = yclient.search_bars(location, categorie=categories)
+    bars = yclient.search_bars(location, categories=categories)
     return json({
-        "bars": [bar_to_dict(bar) for bar in bars],
+        "bars": [bar_to_dict(bar) for bar in bars.businesses],
     })
 
 @app.route("/")
