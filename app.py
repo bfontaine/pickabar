@@ -2,7 +2,7 @@
 
 from random import randint
 
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for
 from flask.ext.assets import Environment, Bundle
 from yelp import errors
 from app_helpers import debug_state, render_template, scss
@@ -36,6 +36,10 @@ def show_bar():
         bar = bars.businesses[randint(0, len(bars.businesses))]
 
     return render_template("bar.html", bar=bar)
+
+@app.route("/give-me-that-bar", methods=["GET"])
+def redirect_home():
+    return redirect(url_for("home"), code=303)  # See Other
 
 @app.route("/")
 def home():
