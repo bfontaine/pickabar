@@ -4,6 +4,7 @@ from random import randint
 
 from flask import Flask, request
 from flask.ext.assets import Environment, Bundle
+from yelp import errors
 from app_helpers import debug_state, render_template, scss
 from pickabar.api import YelpClient
 
@@ -24,7 +25,10 @@ def show_bar():
     if not location:
         return render_template("home.html", error=True)
     yclient = YelpClient(netrc=True)
-    bars = yclient.search_bars(location)
+    try:
+        bars = yclient.search_bars(location)
+    except errors.UnavailableForLocation:
+        return render_template("bar.html")
 
     bar = None
     if bars.businesses:

@@ -21,7 +21,6 @@ def env_key_variants(k):
         "PICKABAR_YELP_%s" % upcase,
     ]
 
-
 class YelpClient(Client):
     """
     Yelp API client. Keywords arguments for the constructor should be

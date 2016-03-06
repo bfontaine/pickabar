@@ -1,4 +1,8 @@
 {% extends "base.html" %}
 {% block body %}
-  <p>WIP</p>
+{% if not bar %}
+  <p>No results; <a href="{{ url_for("home") }}">Try again</a>.</p>
+{% else %}
+  {{ bar.name }}
+{% endif %}
 {% endblock %}
