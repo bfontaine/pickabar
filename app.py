@@ -1,31 +1,31 @@
 # -*- coding: UTF-8 -*-
 
+from random import randint
 from flask import Flask, request, render_template
-from app_helpers import json, json_error, parse_categories, bar_to_dict
 from app_helpers import debug_state
 from pickabar.api import YelpClient
 
 app = Flask(__name__)
 app.debug = debug_state()
 
-#yclient = YelpClient(env=True)
+@app.route("/give-me-that-bar", methods=["POST"])
+def show_bar():
+    yclient = YelpClient(netrc=True)
 
-@app.route("/api/1/json/bars", methods=["POST"])
-def json_bars():
     form = request.form
     if "location" not in form:
-        return json_error("Missing location")
+        return render_template("home.html", error="noloc")
 
     location = form["location"]
-    try:
-        categories = parse_categories(form.get("categories", ""))
-    except ValueError:
-        return json_error("Bad categories")
 
-    bars = yclient.search_bars(location, categories=categories)
-    return json({
-        "bars": [bar_to_dict(bar) for bar in bars.businesses],
-    })
+    bars = yclient.search_bars(location)
+
+    if not bars.businesses:
+        return render_template("home.html", error="noresults")
+
+    bar = bars.businesses[randint(0, len(bars.businesses))]
+
+    return render_template("bar.html", bar=bar)
 
 @app.route("/")
 def home():
