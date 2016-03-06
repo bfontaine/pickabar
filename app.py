@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 from app_helpers import json, json_error, parse_categories, bar_to_dict
 from app_helpers import debug_state
 from pickabar.api import YelpClient
@@ -8,7 +8,7 @@ from pickabar.api import YelpClient
 app = Flask(__name__)
 app.debug = debug_state()
 
-yclient = YelpClient(env=True)
+#yclient = YelpClient(env=True)
 
 @app.route("/api/1/json/bars", methods=["POST"])
 def json_bars():
@@ -29,7 +29,7 @@ def json_bars():
 
 @app.route("/")
 def home():
-    return "WIP"
+    return render_template("home.html")
 
 if __name__ == "__main__":
     app.run()
