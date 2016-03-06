@@ -1,10 +1,40 @@
-#page-home {
+$footer-height: 30px;
+$footer-color: #DDD;
+$transparent-bg: rgba(128, 128, 128, .2);
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: $footer-height;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height;
+  line-height: $footer-height;
+  background-color: $transparent-bg;
+
+  .authorship {
+    color: $footer-color;
+    padding-right: 50px;
+    text-align: right;
+
+    a { color: inherit; }
+  }
+}
+
+.page-home {
     background-image: url("/static/img/bar.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 
     form {
-        background-color: rgba(128, 128, 128, .2);
+        background-color: $transparent-bg;
         max-width: 500px;
         border-radius: 10px;
         padding: 25px;
