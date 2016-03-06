@@ -3,8 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <title>{% if title %}{{ title }}{% else %}Pickabar{% endif %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% assets "css_all" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}" />
+    {% endassets %}
   </head>
-  <body>
-    {% block body %}{% endblock %}
+  <body{% if page_id %} id="page-{{ page_id }}"{% endif %}>
+    <div class="container-fluid">
+        {% block body %}{% endblock %}
+    </div>
   </body>
 </html>

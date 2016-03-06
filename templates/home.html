@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block body %}
-  <form action="{{ url_for("show_bar") }}" method="POST">
-    <input type="search" id="q" name="location" />
-  <p>WIP</p>
+  <form action="{{ url_for("show_bar") }}" method="post" class="center">
+    <div{% if error %} class="has-error"{% endif %}>
+      <label for="q" class="sr-only">Location</label>
+      <input type="search" id="q" name="location"
+            autofocus="true" autosave="true" required="true"
+            class="form-control input-lg"
+            placeholder="Where are you?" />
+    </div>
+
+    <button type="submit"
+            class="btn btn-lg btn-primary btn-block action">Pick a bar!</button>
   </form>
 {% endblock %}
