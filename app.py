@@ -18,13 +18,13 @@ assets.register("css_all", Bundle(
     filters=[scss, "cssmin"],
     output="css/pick.a.css"))
 
+yclient = YelpClient(env=True)
 
 @app.route("/give-me-that-bar", methods=["POST"])
 def show_bar():
     location = request.form.get("location")
     if not location:
         return render_template("home.html", error=True)
-    yclient = YelpClient(netrc=True)
     try:
         bars = yclient.search_bars(location)
     except errors.UnavailableForLocation:
