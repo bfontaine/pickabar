@@ -6,6 +6,7 @@ from flask import Flask, request
 from flask.ext.assets import Environment, Bundle
 from yelp import errors
 from app_helpers import debug_state, render_template, scss
+from app_helpers import yelp_client_kwargs
 from pickabar.api import YelpClient
 
 app = Flask(__name__)
@@ -18,7 +19,7 @@ assets.register("css_all", Bundle(
     filters=[scss, "cssmin"],
     output="css/pick.a.css"))
 
-yclient = YelpClient(env=True)
+yclient = YelpClient(**yelp_client_kwargs())
 
 @app.route("/give-me-that-bar", methods=["POST"])
 def show_bar():
