@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
 {% if not bar %}
-  <p>No results; <a href="{{ url_for("home") }}">Try again</a>.</p>
+  <p>Where are you? We couldn’t find any bar around there. <a href="{{ url_for("home") }}">Try again</a>.</p>
 {% else %}
   {{ bar.name }}
 {% endif %}
