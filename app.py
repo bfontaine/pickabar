@@ -18,6 +18,11 @@ assets.register("css_all", Bundle(
     "sass/app.scss",
     filters=[scss, "cssmin"],
     output="css/pick.a.css"))
+assets.register("js_all", Bundle(
+    "js/app.js",
+    # we don't want to depend on external tools
+    filters=["jsmin"],
+    output="js/pick.a.js"))
 
 yclient = YelpClient(**yelp_client_kwargs())
 
