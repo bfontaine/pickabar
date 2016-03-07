@@ -8,6 +8,10 @@ html {
 }
 
 body {
+  background-image: url("/static/img/bar.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
   margin-bottom: $footer-height;
 }
 
@@ -29,10 +33,6 @@ footer {
 }
 
 .page-home {
-    background-image: url("/static/img/bar.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-
     form {
         background-color: $transparent-bg;
         max-width: 500px;
