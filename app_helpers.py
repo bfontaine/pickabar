@@ -26,6 +26,41 @@ def render_template(name, **kwargs):
 
     return _render_template(name, **kwargs)
 
+def make_json_serializable(obj):
+    """
+    A very simple solution to make a JSON-serializable dict of any given
+    object. We use it to store stuff in the session for easier debugging.
+
+    It doesn't support loops.
+    We're not trying to make a fool-proof solution; just some quick debugging
+    tool.
+    """
+    if isinstance(obj, (list, tuple)):
+        ls = []
+        for e in obj:
+            ls.append(make_json_serializable(e))
+        # always use list/tuple classes even if the original object's class
+        # inherits from them
+        klass = list if isinstance(obj, list) else tuple
+        return klass(ls)
+
+    serializables = (None.__class__, str, unicode, bool, int, long, float, dict)
+    if isinstance(obj, serializables):
+        return obj
+
+    if isinstance(obj, (lambda: 0).__class__):
+        raise ValueError(repr(obj) + " can't be JSON serialized")
+
+    d = {}
+    for attr in dir(obj):
+        if attr.startswith("_"):
+            continue
+        v = getattr(obj, attr)
+        # test if it's JSON-serializable. Note we don't detect loops here
+        d[attr] = make_json_serializable(v)
+
+    return d
+
 def scss(_in, out, **kw):
     """sass compilation"""
     out.write(sass.compile(string=_in.read(), include_paths=(sass_path,)))

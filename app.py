@@ -2,15 +2,16 @@
 
 from random import randint
 
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, session
 from flask.ext.assets import Environment, Bundle
 from yelp import errors
 from app_helpers import debug_state, render_template, scss
-from app_helpers import yelp_client_kwargs
+from app_helpers import yelp_client_kwargs, make_json_serializable
 from pickabar.api import YelpClient
 
 app = Flask(__name__)
 app.debug = debug_state()
+app.secret_key = "debug"
 
 assets = Environment(app)
 assets.register("css_all", Bundle(
@@ -38,12 +39,20 @@ def show_bar():
 
     bar = None
     if bars.businesses:
+        # Unfortunately only <=20 bars are returned at once and we can't afford
+        # to let people wait while we retrieve more of them for a more
+        # "accurate" random. We might need some caching here.
         bar = bars.businesses[randint(0, len(bars.businesses))]
+
+    if app.debug:
+        session["bar"] = make_json_serializable(bar)
 
     return render_template("bar.html", bar=bar)
 
 @app.route("/give-me-that-bar", methods=["GET"])
-def redirect_home():
+def get_show_bar():
+    if app.debug:
+        return render_template("bar.html", bar=session["bar"], title="DEBUG")
     return redirect(url_for("home"), code=303)  # See Other
 
 @app.route("/")
