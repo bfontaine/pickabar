@@ -1,4 +1,5 @@
 $footer-height: 30px;
+$content-padding: 25px;
 $white: #DDD;
 $footer-color: $white;
 $transparent-bg: rgba(128, 128, 128, .2);
@@ -16,7 +17,11 @@ body {
   margin-bottom: $footer-height;
 }
 
-footer {
+.yelp-logo {
+  margin-top: -6px;
+}
+
+footer.main {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -34,9 +39,10 @@ footer {
 }
 
 .content {
+  color: $white;
   background-color: $transparent-bg;
   border-radius: 10px;
-  padding: 25px;
+  padding: $content-padding;
   margin: 140px auto;
 }
 
@@ -48,13 +54,20 @@ footer {
 }
 
 .page-bar {
-  .content { max-width: 600px; }
+  .content {
+    max-width: 600px;
+
+    footer {
+      margin-bottom: 10px-$content-padding;
+
+      p { margin: 0; }
+    }
+  }
 
   .flash-error {
     // make it easier to read
     background-color: adjust-color($transparent-bg, $red: 30, $alpha: 0.3);
 
-    color: $white;
     font-size: 3rem;
     text-align: center;
 

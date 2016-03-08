@@ -5,6 +5,15 @@
     <p>:'(<br/>We couldn’t find any bar around there. <a href="{{ url_for("home") }}">Try again</a>.</p>
   </div>
 {% else %}
-  {{ bar.name }}
+  <div class="content bar">
+    <h1>{{ bar.name }}</h1>
+
+    <footer>
+      <p>Data from <a href="{{ bar.url }}"
+                      rel="external nofollow"><img alt="Yelp.com"
+                        src="/static/img/yelp-logo.png"
+                        width="44" height="24" class="yelp-logo" /></a>.</p>
+    </footer>
+  </div>
 {% endif %}
 {% endblock %}
