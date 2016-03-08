@@ -8,6 +8,13 @@
   <div class="content bar">
     <h1>{{ bar.name }}</h1>
 
+    <p class="yelp-reviews">
+      {# TODO change this; the generic image is badly cropped and we get
+         white borders around stars #}
+      <img src="{{ bar.rating_img_url }}"
+           width="84" height="17"
+           alt="{{ bar.rating }}/5" /> based on {{ bar.review_count }} Yelp reviews.
+    </p>
     <footer>
       <p>Data from <a href="{{ bar.url }}"
                       rel="external nofollow"><img alt="Yelp.com"
