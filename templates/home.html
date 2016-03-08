@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
-  <form action="{{ url_for("show_bar") }}" method="post" class="center">
+  <div class="content">
+  <form action="{{ url_for("show_bar") }}" method="post">
     <div{% if error %} class="has-error"{% endif %}>
       <label for="q" class="sr-only">Location</label>
       <input type="search" id="q" name="location"
@@ -12,4 +13,5 @@
     <button type="submit"
             class="btn btn-lg btn-primary btn-block action">Pick a bar!</button>
   </form>
+  </div>
 {% endblock %}

@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block body %}
 {% if not bar %}
-  <p>Where are you? We couldn’t find any bar around there. <a href="{{ url_for("home") }}">Try again</a>.</p>
+  <div class="content flash-error">
+    <p>:'(<br/>We couldn’t find any bar around there. <a href="{{ url_for("home") }}">Try again</a>.</p>
+  </div>
 {% else %}
   {{ bar.name }}
 {% endif %}

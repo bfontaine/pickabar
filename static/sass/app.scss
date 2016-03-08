@@ -1,5 +1,6 @@
 $footer-height: 30px;
-$footer-color: #DDD;
+$white: #DDD;
+$footer-color: $white;
 $transparent-bg: rgba(128, 128, 128, .2);
 
 html {
@@ -32,16 +33,34 @@ footer {
   }
 }
 
-.page-home {
-    form {
-        background-color: $transparent-bg;
-        max-width: 500px;
-        border-radius: 10px;
-        padding: 25px;
-        margin: 140px auto;
+.content {
+  background-color: $transparent-bg;
+  border-radius: 10px;
+  padding: 25px;
+  margin: 140px auto;
+}
 
-        .action {
-            margin-top: 20px;
-        }
+.page-home {
+  .content { max-width: 500px; }
+  .action {
+    margin-top: 20px;
+  }
+}
+
+.page-bar {
+  .content { max-width: 600px; }
+
+  .flash-error {
+    // make it easier to read
+    background-color: adjust-color($transparent-bg, $red: 30, $alpha: 0.3);
+
+    color: $white;
+    font-size: 3rem;
+    text-align: center;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
     }
+  }
 }
