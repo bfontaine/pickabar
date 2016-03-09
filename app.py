@@ -1,7 +1,5 @@
 # -*- coding: UTF-8 -*-
 
-from random import randint
-
 from flask import Flask, request, redirect, url_for, session
 from flask.ext.assets import Environment, Bundle
 from yelp import errors
@@ -32,22 +30,18 @@ def show_bar():
     location = request.form.get("location")
     if not location:
         return render_template("home.html", error=True)
-    try:
-        bars = yclient.search_bars(location)
-    except errors.UnavailableForLocation:
-        return render_template("bar.html")
 
-    bar = None
-    if bars.businesses:
-        # Unfortunately only <=20 bars are returned at once and we can't afford
-        # to let people wait while we retrieve more of them for a more
-        # "accurate" random. We might need some caching here.
-        bar = bars.businesses[randint(0, len(bars.businesses))]
+    error = None
+    try:
+        bar = yclient.get_random_bar(location)
+    except errors.UnavailableForLocation:
+        error = "UnavailableForLocation"
+        bar = None
 
     if app.debug:
         session["bar"] = make_json_serializable(bar)
 
-    return render_template("bar.html", bar=bar)
+    return render_template("bar.html", bar=bar, error=error)
 
 @app.route("/give-me-that-bar", methods=["GET"])
 def get_show_bar():

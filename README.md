@@ -9,12 +9,6 @@ Pickabar is a Web app to —guess what?— pick a bar.
 
 The next steps are up to you. 🍻
 
-## Limitations
-
-This is currently limited by the top 20 results given by the Yelp API in the
-area. They disallow caching results so this is the only way to get acceptable
-response times.
-
 ## See Also
 
 Not to be confused with [Gerrard][] nor [the one with Dave’s crown][dave].

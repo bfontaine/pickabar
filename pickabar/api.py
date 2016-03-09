@@ -6,10 +6,14 @@ Thin wrapper around Yelp's client library.
 
 from os import environ
 from netrc import netrc
+from random import randint
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
 
 __all__ = ["YelpClient"]
+
+MAX_OFFSET = 1000
+DEFAULT_LIMIT = 20
 
 def env_key_variants(k):
     upcase = k.upper()
@@ -84,3 +88,28 @@ class YelpClient(Client):
         kwargs["category_filter"] = "bars"
         kwargs["location"] = location
         return self.search(**kwargs)
+
+    def get_random_bar(self, location, **kwargs):
+        """
+        Return a random bar at a given location using max. two requests to the
+        Yelp API.
+        It first makes an API call in order to get the total results count,
+        then generates a random offset under this upper limit. If this offset
+        is lower than 20 we already have the business from our API call and can
+        return it; if not we make another call to get it.
+        """
+        kwargs["offset"] = 0
+        kwargs["limit"] = DEFAULT_LIMIT
+        res = self.search_bars(location, **kwargs)
+        if not res.total:
+            return None
+        max_offset = min(res.total, MAX_OFFSET)
+        offset = randint(0, max_offset-1)
+        if offset < DEFAULT_LIMIT:
+            return res.businesses[offset]
+        kwargs["offset"] = offset
+        kwargs["limit"] = 1
+        res = self.search_bars(location, **kwargs)
+        if not res.businesses:
+            return None
+        return res.businesses[0]
