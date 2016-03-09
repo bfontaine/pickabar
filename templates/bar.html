@@ -2,7 +2,13 @@
 {% block body %}
 {% if not bar %}
   <div class="content flash-error">
-    <p>:'(<br/>We couldn’t find any bar around there. <a href="{{ url_for("home") }}">Try again</a>.</p>
+    <p>:'(<br/>
+      {% if error == "UnavailableForLocation" %}
+        It seems Yelp is not available for this region.
+      {% else %}
+        We couldn’t find any bar around there.
+      {% endif %}
+      <a href="{{ url_for("home") }}">Try again</a>.</p>
   </div>
 {% else %}
   <div class="content bar">
