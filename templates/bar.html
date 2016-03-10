@@ -3,8 +3,12 @@
 {% if not bar %}
   <div class="content flash-error">
     <p>:'(<br/>
-      {% if error == "UnavailableForLocation" %}
+      {% if error %}
+        {% if error == "UnavailableForLocation" %}
         It seems Yelp is not available for this region.
+        {% else %}{# YelpError #}
+        We got an error. Please <a href="https://github.com/bfontaine/pickabar/issues/new" rel="nofollow">report it</a> if it persists.
+        {% endif %}
       {% else %}
         We couldn’t find any bar around there.
       {% endif %}

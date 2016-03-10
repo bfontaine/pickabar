@@ -27,16 +27,20 @@ yclient = YelpClient(**yelp_client_kwargs())
 
 @app.route("/give-me-that-bar", methods=["POST"])
 def show_bar():
-    location = request.form.get("location")
+    location = request.form.get("location", "").strip()
     if not location:
         return render_template("home.html", error=True)
 
+    bar = None
     error = None
     try:
         bar = yclient.get_random_bar(location)
-    except errors.UnavailableForLocation:
-        error = "UnavailableForLocation"
-        bar = None
+    except errors.UnspecifiedLocation:
+        return render_template("home.html", error=True)
+    except (
+        errors.UnavailableForLocation,
+        errors.YelpError), e:
+        error = e.__class__.__name__
 
     if app.debug:
         session["bar"] = make_json_serializable(bar)
