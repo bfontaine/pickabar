@@ -44,6 +44,11 @@ footer.main {
   border-radius: 10px;
   padding: $content-padding;
   margin: 140px auto;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
 }
 
 .page-home {
@@ -70,10 +75,5 @@ footer.main {
 
     font-size: 3rem;
     text-align: center;
-
-    a {
-      color: inherit;
-      text-decoration: underline;
-    }
   }
 }

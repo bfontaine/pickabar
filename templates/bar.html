@@ -5,6 +5,7 @@
     <p>:'(<br/>
       {% if error %}
         {% if error == "UnavailableForLocation" %}
+        {# Note: it also raises this error for unknown regions e.g. "dfgdfgdfgdgf" #}
         It seems Yelp is not available for this region.
         {% else %}{# YelpError #}
         We got an error. Please <a href="https://github.com/bfontaine/pickabar/issues/new" rel="nofollow">report it</a> if it persists.
@@ -29,7 +30,10 @@
       <p>Data from <a href="{{ bar.url }}" target="_blank"
                       rel="external nofollow"><img alt="Yelp.com"
                         src="/static/img/yelp-logo.png"
-                        width="44" height="24" class="yelp-logo" /></a>.</p>
+                        width="44" height="24" class="yelp-logo" /></a>.
+         {# We might want to make another request with the same location
+            instead of going back home #}
+         <a href="{{ url_for("home") }}">Try another</a>.</p>
     </footer>
   </div>
 {% endif %}
