@@ -20,6 +20,21 @@ def yelp_client_kwargs():
         kw["env"] = True
     return kw
 
+def bar_address(bar):
+    """
+    Return the address of a bar
+    """
+    # Yelp puts the neighbourhood in the display_address even if it has nothing
+    # to do there. Their website show the correct address.
+    lines = bar.location.display_address[:]
+    neighborhoods = bar.location.neighborhoods
+    # Hopefully there are no false-positives
+    if neighborhoods and neighborhoods[0] in lines:
+        lines.remove(neighborhoods[0])
+
+    # Remove the country
+    return lines[:-1]
+
 def render_template(name, **kwargs):
     if "page_id" not in kwargs and name.endswith(".html"):
         kwargs["page_id"] = name.replace(".html", "")

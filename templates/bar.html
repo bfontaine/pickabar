@@ -18,7 +18,7 @@
 {% else %}
   <div class="content bar">
     <h1>{{ bar.name }}</h1>
-
+    {% if bar.review_count %}
     <p class="yelp-reviews">
       {# TODO change this; the generic image is badly cropped and we get
          white borders around stars #}
@@ -26,6 +26,16 @@
            width="84" height="17"
            alt="{{ bar.rating }}/5" /> based on {{ bar.review_count }} Yelp reviews.
     </p>
+    {% endif %}
+
+    <p class="address">
+      {% for line in bar_address %}
+        {{ line }}<br />
+      {% endfor %}
+    </p>
+    <div class="osm-map">
+      {{ bar.location.coordinate | osm_map }}
+    </div>
     <footer>
       <p>Data from <a href="{{ bar.url }}" target="_blank"
                       rel="external nofollow"><img alt="Yelp.com"

@@ -3,13 +3,16 @@
 from flask import Flask, request, redirect, url_for, session
 from flask.ext.assets import Environment, Bundle
 from yelp import errors
-from app_helpers import debug_state, render_template, scss
+from app_helpers import debug_state, render_template, scss, bar_address
 from app_helpers import yelp_client_kwargs, make_json_serializable
 from pickabar.api import YelpClient
+from jinja2_filters import activate_filters
 
 app = Flask(__name__)
 app.debug = debug_state()
 app.secret_key = "debug"
+
+activate_filters(app)
 
 assets = Environment(app)
 assets.register("css_all", Bundle(
@@ -42,15 +45,20 @@ def show_bar():
         errors.YelpError), e:
         error = e.__class__.__name__
 
+    address = bar_address(bar)
+
     if app.debug:
         session["bar"] = make_json_serializable(bar)
+        session["address"] = address
 
-    return render_template("bar.html", bar=bar, error=error)
+    return render_template("bar.html", bar=bar, bar_address=address,
+            error=error)
 
 @app.route("/give-me-that-bar", methods=["GET"])
 def get_show_bar():
     if app.debug:
-        return render_template("bar.html", bar=session["bar"], title="DEBUG")
+        return render_template("bar.html", bar=session["bar"], title="DEBUG",
+                bar_address=session["address"])
     return redirect(url_for("home"), code=303)  # See Other
 
 @app.route("/")
