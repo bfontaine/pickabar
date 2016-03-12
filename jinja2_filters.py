@@ -16,8 +16,18 @@ _osm_default_attrs = dict(
     marginwidth=0,
 )
 
+def _normalize_location(loc):
+    if isinstance(loc, dict):
+        return loc
+
+    return dict(
+        latitude=loc.latitude,
+        longitude=loc.longitude,
+    )
+
 @evalcontextfilter
 def osm_map(eval_ctx, loc, **kw):
+    loc = _normalize_location(loc)
     lat = loc["latitude"]
     lon = loc["longitude"]
     layer = kw.pop("layer", "mapnik")
