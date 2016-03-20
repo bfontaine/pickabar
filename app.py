@@ -6,13 +6,13 @@ from yelp import errors
 from app_helpers import debug_state, render_template, scss, bar_address
 from app_helpers import yelp_client_kwargs, make_json_serializable
 from pickabar.api import YelpClient
-from jinja2_filters import activate_filters
+from jinja2_maps import activate_filters
 
 app = Flask(__name__)
 app.debug = debug_state()
 app.secret_key = "debug"
 
-activate_filters(app)
+activate_filters(app.jinja_env)
 
 assets = Environment(app)
 assets.register("css_all", Bundle(
