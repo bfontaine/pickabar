@@ -17,7 +17,9 @@
   </div>
 {% else %}
   <div class="content bar">
-    <h1>{{ bar.name }}</h1>
+    <h1><a class="bar-name"
+           href="{{ bar.url }}" target="_blank"
+           rel="external nofollow noopener noreferrer">{{ bar.name }}</a></h1>
     {% if bar.review_count %}
     <p class="yelp-reviews">
       {# TODO change this; the generic image is badly cropped and we get
@@ -34,7 +36,7 @@
       {% endfor %}
     </p>
     <div class="osm-map">
-      {{ bar.location.coordinate | osm_map }}
+      {{ bar.location.coordinate | osm_map(width=550) }}
     </div>
     <footer>
       <p>Data from <a href="{{ bar.url }}" target="_blank"

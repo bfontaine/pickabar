@@ -62,6 +62,10 @@ footer.main {
   .content {
     max-width: 600px;
 
+    .bar-name {
+      text-decoration: inherit;
+    }
+
     footer {
       margin-bottom: 10px-$content-padding;
 
