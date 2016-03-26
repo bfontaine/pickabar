@@ -32,7 +32,7 @@ def bar_address(bar):
     if neighborhoods and neighborhoods[0] in lines:
         lines.remove(neighborhoods[0])
 
-    # Remove the country
+    # Remove the country. We don't need it at this level.
     return lines[:-1]
 
 def render_template(name, **kwargs):
@@ -46,7 +46,7 @@ def make_json_serializable(obj):
     A very simple solution to make a JSON-serializable dict of any given
     object. We use it to store stuff in the session for easier debugging.
 
-    It doesn't support loops.
+    It doesn't support references loops.
     We're not trying to make a fool-proof solution; just some quick debugging
     tool.
     """
