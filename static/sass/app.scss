@@ -13,8 +13,6 @@ body {
   background-image: url("/static/img/bar-small.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-
-  margin-bottom: $footer-height;
 }
 
 .yelp-logo {
@@ -28,6 +26,8 @@ footer.main {
   height: $footer-height;
   line-height: $footer-height;
   background-color: $transparent-bg;
+
+  p { margin-bottom: 0; }
 
   .authorship {
     color: $footer-color;
