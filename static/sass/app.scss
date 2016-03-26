@@ -4,6 +4,9 @@ $white: #DDD;
 $footer-color: $white;
 $transparent-bg: rgba(128, 128, 128, .2);
 
+$open-color: #5CB85C;
+$closed-color: #D9534F;
+
 html {
   position: relative;
   min-height: 100%;
@@ -64,6 +67,17 @@ footer.main {
 
     .bar-name {
       text-decoration: inherit;
+    }
+
+    .opening-sign {
+      display: inline-block;
+      font-size: 1.5rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      vertical-align: top;
+
+      &.open   { background-color: $open-color; }
+      &.closed { background-color: $closed-color; }
     }
 
     footer {
