@@ -5,6 +5,7 @@ from flask.ext.assets import Environment, Bundle
 from yelp import errors
 from app_helpers import debug_state, render_template, scss, bar_address
 from app_helpers import yelp_client_kwargs, make_json_serializable
+from app_helpers import show_apple_maps
 from pickabar.api import YelpClient
 from jinja2_maps import activate_filters
 
@@ -52,13 +53,15 @@ def show_bar():
         session["address"] = address
 
     return render_template("bar.html", bar=bar, bar_address=address,
-            error=error)
+            error=error,
+            show_apple_maps=show_apple_maps(request))
 
 @app.route("/give-me-that-bar", methods=["GET"])
 def get_show_bar():
     if app.debug:
         return render_template("bar.html", bar=session["bar"], title="DEBUG",
-                bar_address=session["address"])
+                bar_address=session["address"],
+                show_apple_maps=show_apple_maps(request))
     return redirect(url_for("home"), code=303)  # See Other
 
 @app.route("/")

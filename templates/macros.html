@@ -1,0 +1,5 @@
+{# Write a link to an external URL that opens in a new tab. #}
+{% macro external_link(target, text, class=None) %}
+<a {% if class %}class="{{ class }}" {% endif %}href="{{ target }}"{#
+#} target="_blank" rel="external nofollow noopener noreferrer">{{ text }}</a>
+{% endmacro %}

@@ -17,9 +17,7 @@
   </div>
 {% else %}
   <div class="content bar">
-    <h1><a class="bar-name"
-           href="{{ bar.url }}" target="_blank"
-           rel="external nofollow noopener noreferrer">{{ bar.name }}</a>
+    <h1>{{ m.external_link(bar.url, bar.name, "bar-name") }}
     <span class="opening-sign {% if bar.is_closed %}closed{% else %}open{% endif %}">
       {%- if bar.is_closed %}Closed{% else %}Open{% endif -%}
     </span>
@@ -42,6 +40,14 @@
     <div class="osm-map">
       {{ bar.location.coordinate | osm_map(width=550) }}
     </div>
+    <p class="external-maps">
+      {% if show_apple_maps %}
+        {# FIXME show a pin on the linked map #}
+        {{ m.external_link(bar.location.coordinate | apple_maps_url, "Check in Maps") }}
+      {% else %}
+        {{ m.external_link(bar.location.coordinate | gmaps_url, "Check on Google Maps") }}
+      {% endif %}
+    </p>
     <footer>
       <p>Data from <a href="{{ bar.url }}" target="_blank"
                       rel="external nofollow noopener noreferrer"><img alt="Yelp.com"

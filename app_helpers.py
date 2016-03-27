@@ -3,6 +3,7 @@
 import os.path
 from os import environ
 from flask import render_template as _render_template
+from ua_parser import user_agent_parser
 import sass
 
 here = os.path.dirname(os.path.realpath(__file__))
@@ -34,6 +35,14 @@ def bar_address(bar):
 
     # Remove the country. We don't need it at this level.
     return lines[:-1]
+
+def show_apple_maps(request):
+    """
+    Test if we can show an Apple Maps link to a device. There's no Web version
+    of Apple Maps; it redirects on Google Maps on non-iOS/OSX platforms.
+    """
+    ua = user_agent_parser.ParseOS(request.user_agent.string)
+    return ua.get("family") in ("iOS", "Mac OS X")
 
 def render_template(name, **kwargs):
     if "page_id" not in kwargs and name.endswith(".html"):
