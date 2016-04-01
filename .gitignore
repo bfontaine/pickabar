@@ -2,3 +2,4 @@
 .sass-cache
 /static/css/pick.a.css
 /static/js/pick.a.js
+/.env
