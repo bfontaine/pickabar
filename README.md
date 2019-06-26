@@ -1,7 +1,6 @@
 # Pickabar
 
-Pickabar is a Web app to —guess what?— pick a bar. A live version is available
-on [pickabar.bftapp.com](http://pickabar.bftapp.com).
+Pickabar is a Web app to —guess what?— pick a bar.
 
 ## Instructions
 
